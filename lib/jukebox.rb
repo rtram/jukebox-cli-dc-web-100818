@@ -12,6 +12,7 @@ songs = [
   "Amos Lee - Keep It Loose, Keep It Tight"
 ]
 
+
 def say_hello(name)
   "Hi #{name}!"
 end
@@ -28,29 +29,47 @@ def list (songs)
   counter = 0 
   while counter < songs.length
     puts "#{counter + 1}. #{songs[counter]}"
+    counter += 1
   end 
 end 
 
 def play (songs)
   puts "Please enter a song name or number:"
   user_response = gets.chomp
-  if 0 < user_response.to_i < songs.length
-    puts "Playing #{songs[user_response.to_i]}"
-  end 
+  user_response_int = user_response.to_i
 
-  songs.each do |song_title|
-    if song_title.include? (user_response)
-      puts "Playing #{song_title}"
-    else
-      puts "Invalid input, please try again"
-    end
-  end 
+  if (user_response_int < songs.length) && (user_response_int > 0)
+    puts "Playing #{songs[user_response_int - 1]}"
+  elsif songs.include? (user_response)
+    puts "Playing #{user_response}"
+  else
+    puts "Invalid input, please try again"
+  end  
 end 
 
+def exit_jukebox
+  puts "Goodbye"
+end 
 
-
-puts "Enter your name:"
-users_name = gets.chomp
-
-puts say_hello(users_name)
-
+def run (user_input)
+  help
+  puts "Please enter a command:"
+  user_input = gets.chomp
+  
+  while user_input != "exit"
+    if user_input = "help"
+      help
+      puts "Please enter a command:"
+      user_input = gets.chomp
+    elsif user_input = "list"
+      list
+      puts "Please enter a command:"
+      user_input = gets.chomp
+    elsif user_input = "play"
+      play 
+    end 
+  end 
+  if user_input == "exit"
+    exit
+  end 
+end 
